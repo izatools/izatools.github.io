@@ -46,6 +46,21 @@ p{margin:0}
 .btn.ghost:hover{background:#fff}
 .note{font-size:14px;color:var(--muted)}
 
+/* new-version strip and What's new */
+.news{background:var(--slate-deep);color:#fff;font-size:15px}
+.news .wrap{display:flex;align-items:center;gap:14px;min-height:44px;padding-top:6px;padding-bottom:6px;flex-wrap:wrap}
+.news b{background:var(--green);color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:4px}
+.news a{color:#fff;font-weight:650}
+.news .x{margin-left:auto;background:none;border:0;color:#fff;font-size:22px;line-height:1;cursor:pointer;padding:0 4px}
+#new{background:var(--sheet);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+#new .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px 32px;margin-top:22px}
+#new h3{font-size:16px;margin:0 0 6px}
+#new ul{margin:0;padding-left:18px;font-size:15px}
+#new li{margin:4px 0}
+#new .upd{margin-top:22px;padding:14px 16px;border:1px solid var(--line);border-left:4px solid var(--green);border-radius:6px;background:var(--paper);font-size:15px}
+.tool{position:relative}
+.tool .tag{position:absolute;top:2px;right:4px;background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;letter-spacing:.03em}
+
 /* header */
 header{position:sticky;top:0;z-index:5;background:rgba(237,239,244,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
 header .wrap{display:flex;align-items:center;gap:28px;height:64px}
@@ -123,7 +138,7 @@ section > .wrap > h2 + p{margin-top:12px}
 .panel:last-child{border-right:0}
 .panel .btns{display:flex;gap:2px;flex:1}
 .panel .name{text-align:center;font-size:12px;color:var(--muted);padding:6px 0;border-top:1px solid #E3E6EE;margin-top:6px}
-.tool{display:flex;flex-direction:column;align-items:center;gap:6px;width:86px;padding:8px 3px;border:1px solid transparent;border-radius:5px;background:none;font:inherit;font-size:13px;line-height:1.2;color:var(--ink);cursor:pointer;text-align:center}
+.tool{display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;padding:8px 2px;border:1px solid transparent;border-radius:5px;background:none;font:inherit;font-size:13px;line-height:1.2;color:var(--ink);cursor:pointer;text-align:center}
 .tool img{width:32px;height:32px}
 .tool:hover{background:#fff;border-color:var(--line)}
 .tool[aria-pressed="true"]{background:#fff;border-color:var(--slate);box-shadow:inset 0 -3px 0 var(--slate)}
@@ -229,6 +244,16 @@ dialog .sum{margin:6px 0 18px;color:var(--muted);font-size:15px}
 </head>
 <body>
 
+<div class="news" id="news" hidden>
+  <div class="wrap">
+    <b>New</b>
+    <span id="news-text"></span>
+    <a href="#new">What's new</a>
+    <a data-trial href="#">Download</a>
+    <button class="x" type="button" id="news-x" aria-label="Hide this notice">&times;</button>
+  </div>
+</div>
+
 <header>
   <div class="wrap">
     <a class="mark" href="#top"><img src="img/iza-mark.png" alt=""><b>IZA Coordination Tools<small>for Navisworks Manage</small></b></a>
@@ -288,12 +313,40 @@ dialog .sum{margin:6px 0 18px;color:var(--muted);font-size:15px}
 <section id="tools">
   <div class="wrap">
     <h2>The IZA tab</h2>
-    <p class="lead">Five panels, in the order you work on a project. Pick a button to see what it does.</p>
+    <p class="lead">Six panels, in the order you work on a project. Pick a button to see what it does.</p>
     <div class="ribbon">
       <div class="tabbar" aria-hidden="true"><span>Home</span><span>Viewpoint</span><span>Review</span><span>Clash Detective</span><span class="on">IZA</span></div>
       <div class="panels" id="panels"></div>
     </div>
     <div class="detail" id="detail" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="new">
+  <div class="wrap">
+    <h2>What's new in v<span class="ver">0.3.4</span></h2>
+    <p class="lead">Released <span id="new-date">1 November 2026</span>. Two new tools and a round of fixes from pilot testers.</p>
+    <div class="cols">
+      <div>
+        <h3>New tools</h3>
+        <ul>
+          <li><b>Quantities</b>: count, length, area and volume of a selection or set, broken down by type and size (pipe and duct diameters), level or category, with a grand total.</li>
+          <li><b>Renumber VPs</b>: puts viewpoint numbers back in sequence after you delete some, or renames a folder with your own prefix.</li>
+          <li><b>Viewpoint panel</b>: Duplicate VPs, Reapply Markup VPs and Renumber VPs together.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Better</h3>
+        <ul>
+          <li>Duplicate VPs: compare viewpoints side by side with pictures and delete from there.</li>
+          <li>Build Clash VPs and Reapply Markup: much faster on big models, with progress, time left and Stop.</li>
+          <li>Select Similar: same file on any level you choose.</li>
+          <li>Level Views: plans fit the building to the screen at the real Revit level heights.</li>
+          <li>Element Info: add any property as a column. Model Files: remove files from the model.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="upd"><b>Already using IZA?</b> Close Navisworks, <a data-trial href="#">download v<span class="ver">0.3.4</span></a> and run it over the old version. Your licence, settings and report details are kept.</p>
   </div>
 </section>
 
@@ -482,7 +535,9 @@ const SHOP = {
   trialUrl: "https://github.com/izatools/izatools.github.io/releases/download/v0.3.4/IZA-Coordination-Tools-Setup-0.3.4.exe",   // GitHub release: tag v0.3.4
   email: "izaniofficial@gmail.com",
   whatsapp: "60149265863",
-  launchEnds: "2026-12-31",          // Personal is RM 99 until this date
+  launchEnds: "2026-12-31",
+  news: { version: "0.3.4", date: "2026-11-01", days: 30,     // top strip shows for this many days after the release
+          text: "v0.3.4 is out: Quantities, Renumber VPs and faster clash viewpoints." },          // Personal is RM 99 until this date
   pay: {                             // Payment-page links from the payment gateway, one per licence.
     launch:  "",                     // Empty = no online payment: the buyer sends the order first and
     personal:"",                     // gets the payment details back by email or WhatsApp.
@@ -503,7 +558,7 @@ const TOOLS = [
   {panel:"Select & Sets", id:"qty", name:"Select Similar", hrs:.75,
    text:"Pick one element and select everything like it: same type, same family, same category or same name, in one file, on any level you choose, or the whole model. Exports the list to Excel and saves it as a live search set.",
    replaces:"Manual selection and search-set setup"},
-  {panel:"Select & Sets", id:"qtys", name:"Quantities", hrs:.5,
+  {panel:"Select & Sets", id:"qtys", name:"Quantities", hrs:.5, isNew:true,
    text:"Count, length, area and volume of the selection, one saved set or every set, broken down by type and size (pipe and duct diameters), level, category or file, with a grand total. Copies straight into Excel.",
    replaces:"Exporting properties to Excel and summing them by hand"},
   {panel:"Select & Sets", id:"appear", name:"Reload Appearance", hrs:.25,
@@ -521,7 +576,7 @@ const TOOLS = [
   {panel:"Viewpoint", id:"mark", name:"Reapply Markup VPs", hrs:.25,
    text:"Puts the section box, colours and redline back on viewpoints that already exist, including visual-check views you link to elements yourself.",
    replaces:"Redoing markup by hand after a model update"},
-  {panel:"Viewpoint", id:"renum", name:"Renumber VPs", hrs:.25,
+  {panel:"Viewpoint", id:"renum", name:"Renumber VPs", hrs:.25, isNew:true,
    text:"Puts viewpoint numbers back in sequence after you delete some (VP02-0001, 0004, 0009 become 0001, 0002, 0003) across a level's date folders, or renames a whole folder with your own prefix. Preview first.",
    replaces:"Renaming viewpoints one by one after a clean-up"},
   {panel:"Element ID", id:"info", name:"Element Info", hrs:.25,
@@ -542,7 +597,7 @@ function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;","
 (function(){
   const host = $("#panels"); const order = [...new Set(TOOLS.map(t=>t.panel))];
   host.innerHTML = order.map(p => `<div class="panel"><div class="btns">${
-      TOOLS.filter(t=>t.panel===p).map(t=>`<button class="tool" type="button" aria-pressed="false" data-tool="${t.id}"><img src="img/${t.id}_32.png" alt="">${esc(t.name)}</button>`).join("")
+      TOOLS.filter(t=>t.panel===p).map(t=>`<button class="tool" type="button" aria-pressed="false" data-tool="${t.id}"><img src="img/${t.id}_32.png" alt="">${esc(t.name)}${t.isNew ? '<span class="tag">NEW</span>' : ""}</button>`).join("")
     }</div><div class="name">${esc(p)}</div></div>`).join("");
   function show(id){
     const t = TOOLS.find(x=>x.id===id);
@@ -563,6 +618,17 @@ function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;","
 })();
 
 /* links */
+(function(){
+  const n = SHOP.news; if (!n) return;
+  const start = new Date(n.date + "T00:00:00"), end = new Date(start.getTime() + n.days * 864e5);
+  document.querySelectorAll(".ver").forEach(e => e.textContent = n.version);
+  $("#new-date").textContent = start.toLocaleDateString("en-GB", {day:"numeric", month:"long", year:"numeric"});
+  const key = "iza-news-" + n.version;
+  if (new Date() > end || load(key)) return;     // old news, or hidden by this visitor
+  $("#news-text").textContent = n.text;
+  $("#news").hidden = false;
+  $("#news-x").onclick = () => { $("#news").hidden = true; store(key, true); };
+})();
 if (Object.values(SHOP.pay).some(Boolean)) $("#pay-how").textContent = "Paid online on a secure payment page; your licence file follows within one working day.";
 document.querySelectorAll("[data-trial]").forEach(a => {
   if (SHOP.trialUrl) a.href = SHOP.trialUrl;
