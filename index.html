@@ -534,6 +534,7 @@ dialog .sum{margin:6px 0 18px;color:var(--muted);font-size:15px}
 const SHOP = {
   trialUrl: "https://github.com/izatools/izatools.github.io/releases/download/v0.3.4/IZA-Coordination-Tools-Setup-0.3.4.exe",   // GitHub release: tag v0.3.4
   email: "izaniofficial@gmail.com",
+  stats: "izatools",                 // GoatCounter site code: visits at https://izatools.goatcounter.com ("" = off)
   whatsapp: "60149265863",
   launchEnds: "2026-12-31",
   news: { version: "0.3.4", date: "2026-11-01", days: 30,     // top strip shows for this many days after the release
@@ -617,6 +618,15 @@ function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;","
     `<div class="bar total"><span>Total a week</span><span></span><b>${total} h</b></div>`;
 })();
 
+/* visitor counter (GoatCounter: no cookies, no personal data); download and buy clicks count as events */
+function track(name){ try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({path:name, title:name, event:true}); } catch(e){} }
+if (SHOP.stats) {
+  const gc = document.createElement("script");
+  gc.async = true; gc.src = "https://gc.zgo.at/count.js";
+  gc.dataset.goatcounter = "https://" + SHOP.stats + ".goatcounter.com/count";
+  document.head.appendChild(gc);
+}
+
 /* links */
 (function(){
   const n = SHOP.news; if (!n) return;
@@ -631,6 +641,7 @@ function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;","
 })();
 if (Object.values(SHOP.pay).some(Boolean)) $("#pay-how").textContent = "Paid online on a secure payment page; your licence file follows within one working day.";
 document.querySelectorAll("[data-trial]").forEach(a => {
+  a.addEventListener("click", () => track("download-trial"));
   if (SHOP.trialUrl) a.href = SHOP.trialUrl;
   else a.addEventListener("click", e => { e.preventDefault(); location.href = "mailto:" + SHOP.email + "?subject=" + encodeURIComponent("IZA Coordination Tools trial"); });
 });
@@ -701,6 +712,7 @@ function buildIds(max, values, start){
 
 document.querySelectorAll("[data-buy]").forEach(b => b.addEventListener("click", () => {
   current = b.dataset.buy; const p = PLANS[current];
+  track("buy-" + current);
   $("#order-title").textContent = "Buy " + p.title;
   $("#order-sum").textContent = p.price + (SHOP.pay[p.key]
     ? ". The payment page opens in a new tab; this page then sends your order with one click."

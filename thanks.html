@@ -37,7 +37,14 @@ main a{color:var(--slate-deep)}
   <div id="out"></div>
 </main>
 <script>
-const SHOP = { email: "izaniofficial@gmail.com", whatsapp: "60149265863" };   // keep the same as index.html
+const SHOP = { email: "izaniofficial@gmail.com", whatsapp: "60149265863", stats: "izatools" };   // keep the same as index.html
+function track(name){ try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({path:name, title:name, event:true}); } catch(e){} }
+if (SHOP.stats) {
+  const gc = document.createElement("script");
+  gc.async = true; gc.src = "https://gc.zgo.at/count.js";
+  gc.dataset.goatcounter = "https://" + SHOP.stats + ".goatcounter.com/count";
+  document.head.appendChild(gc);
+}
 
 const q = new URLSearchParams(location.search);
 const status = q.get("status_id");            // Gateway return: 1 paid, 2 pending, 3 failed. pay = paid in another tab. 0 = order first, pay after
@@ -80,8 +87,8 @@ const enc = encodeURIComponent;
 const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${enc(SHOP.email)}&su=${enc(subject)}&body=${enc(message())}`;
 const outlook = `https://outlook.office.com/mail/deeplink/compose?to=${enc(SHOP.email)}&subject=${enc(subject)}&body=${enc(message())}`;
 const send = proof + `<div class="actions">
-  <a class="btn" href="https://wa.me/${SHOP.whatsapp}?text=${enc(message())}" target="_blank" rel="noopener">Send order on WhatsApp</a>
-  <a class="btn ghost" href="${gmail}" target="_blank" rel="noopener">Send with Gmail</a>
+  <a class="btn" data-track="order-whatsapp" href="https://wa.me/${SHOP.whatsapp}?text=${enc(message())}" target="_blank" rel="noopener">Send order on WhatsApp</a>
+  <a class="btn ghost" data-track="order-gmail" href="${gmail}" target="_blank" rel="noopener">Send with Gmail</a>
   <button class="btn ghost" type="button" id="copy">Copy order</button>
 </div>
 <p class="alt">Other email: <a href="${outlook}" target="_blank" rel="noopener">Outlook</a> or <a href="mailto:${SHOP.email}?subject=${enc(subject)}&body=${enc(message())}">your email app</a>. Or copy the order and send it to <b>${esc(SHOP.email)}</b>. <span id="copied" role="status"></span></p>`;
@@ -110,8 +117,10 @@ if (status === "pay") {
     <p>Send your order below. You get the payment details by email or WhatsApp, and your licence file once paid, within one working day.</p>${details}${send}`;
 }
 
+document.querySelectorAll("[data-track]").forEach(el => el.addEventListener("click", () => track(el.dataset.track)));
 const cp = document.getElementById("copy");
 if (cp) cp.addEventListener("click", async () => {
+  track("order-copy");
   const text = "To: " + SHOP.email + "\nSubject: " + subject + "\n\n" + message();
   let ok = false;
   try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {
