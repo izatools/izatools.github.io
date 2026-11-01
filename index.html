@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IZA Coordination Tools for Navisworks Manage</title>
-<meta name="description" content="Eleven coordination tools on one ribbon tab for Navisworks Manage 2026 and 2027: model file check, level views, select similar, reload appearance, clash groups, marked-up clash viewpoints, element ID tools and a signed clash report.">
+<meta name="description" content="Thirteen coordination tools on one ribbon tab for Navisworks Manage 2026 and 2027: model file check, level views, select similar, quantities, reload appearance, clash groups, marked-up clash viewpoints, duplicate and renumber viewpoints, element ID tools and a signed clash report.">
 <link rel="icon" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/iza-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -245,7 +245,7 @@ dialog .sum{margin:6px 0 18px;color:var(--muted);font-size:15px}
   <div class="wrap">
     <div>
       <h1>From clash test to signed report, without leaving Navisworks.</h1>
-      <p class="lead">Eleven coordination tools on one IZA ribbon tab for Navisworks Manage 2026 and 2027. Check your models are current, group repeated clashes, save marked-up viewpoints in seconds and print the weekly clash report with pictures and signatures.</p>
+      <p class="lead">Thirteen coordination tools on one IZA ribbon tab for Navisworks Manage 2026 and 2027. Check your models are current, group repeated clashes, save marked-up viewpoints in seconds and print the weekly clash report with pictures and signatures.</p>
       <div class="actions">
         <a class="btn" data-trial href="#">Download free 14-day trial</a>
         <a class="btn ghost" href="#pricing">See pricing</a>
@@ -310,7 +310,7 @@ dialog .sum{margin:6px 0 18px;color:var(--muted);font-size:15px}
 <section id="pricing">
   <div class="wrap">
     <h2>Pricing</h2>
-    <p class="lead">Pay once for your PC. Prices in ringgit, paid by FPX online banking or DuitNow through ToyyibPay.</p>
+    <p class="lead">Pay once for your PC. Prices in ringgit. <span id="pay-how">Send your order and the payment details come back by email or WhatsApp; your licence file follows once paid, within one working day.</span></p>
     <div class="plans">
       <div class="plan main">
         <h3>Personal</h3>
@@ -318,7 +318,7 @@ dialog .sum{margin:6px 0 18px;color:var(--muted);font-size:15px}
         <div class="was" id="personal-was"></div>
         <ul>
           <li>1 PC, locked to your computer ID</li>
-          <li>All 11 tools, no time limit</li>
+          <li>All 13 tools, no time limit</li>
           <li>12 months of updates included</li>
           <li>Email and WhatsApp support</li>
         </ul>
@@ -371,8 +371,8 @@ dialog .sum{margin:6px 0 18px;color:var(--muted);font-size:15px}
     <ol class="steps">
       <li><b>Install the trial</b>Run the installer with Navisworks closed, then open the IZA tab.</li>
       <li><b>Copy your computer ID</b>Click About / Support at the bottom of any IZA window and copy the ID.</li>
-      <li><b>Order and pay</b>Click Buy, enter your details and computer ID, then pay by FPX or DuitNow.</li>
-      <li><b>Send the order</b>After payment, one click sends your order details. Your licence arrives by email within one working day.</li>
+      <li><b>Order</b>Click Buy and enter your details and computer ID. One click sends the order by WhatsApp or email.</li>
+      <li><b>Pay</b>You get the payment details back. Once paid, your licence arrives by email within one working day.</li>
       <li><b>Activate</b>About / Support &gt; Open key file &gt; Activate. The footer shows your name.</li>
     </ol>
   </div>
@@ -464,7 +464,7 @@ dialog .sum{margin:6px 0 18px;color:var(--muted);font-size:15px}
           <div class="body">Trial: 14 day(s) left<br><br>Your computer ID (send this when ordering a key):
             <div class="row"><span class="idbox">1A2B-3C4D-5E6F-7A8B</span><span class="copy">Copy</span></div>
           </div>
-          <div class="foot">Trial: 14 day(s) left &nbsp;|&nbsp; IZA Coordination Tools v0.3.3 &nbsp;|&nbsp; <b>About / Support</b></div>
+          <div class="foot">Trial: 14 day(s) left &nbsp;|&nbsp; IZA Coordination Tools v0.3.4 &nbsp;|&nbsp; <b>About / Support</b></div>
         </div>
         <p class="note">Tip: the <b>Buy licence...</b> button in that licence window opens this page with your ID already filled in.</p>
       </details></div>
@@ -479,30 +479,33 @@ dialog .sum{margin:6px 0 18px;color:var(--muted);font-size:15px}
 <script>
 /* ---------- Settings: edit these, then upload ---------- */
 const SHOP = {
-  trialUrl: "https://github.com/izatools/izatools.github.io/releases/download/v0.3.3/IZA-Coordination-Tools-Setup-0.3.3.exe",   // GitHub release: tag v0.3.3
+  trialUrl: "https://github.com/izatools/izatools.github.io/releases/download/v0.3.4/IZA-Coordination-Tools-Setup-0.3.4.exe",   // GitHub release: tag v0.3.4
   email: "izaniofficial@gmail.com",
   whatsapp: "60149265863",
   launchEnds: "2026-12-31",          // Personal is RM 99 until this date
-  pay: {                             // ToyyibPay bill links, one per licence (https://toyyibpay.com/xxxxxxxx)
-    launch:  "https://toyyibpay.com/IZA-Personal-Launch",
-    personal:"https://toyyibpay.com/IZA-Personal",
-    team:    "https://toyyibpay.com/IZA-Team-5",
-    company: "https://toyyibpay.com/IZA-Company-1-Year",
-    student: "https://toyyibpay.com/IZA-Student-1-Year"
+  pay: {                             // Payment-page links from the payment gateway, one per licence.
+    launch:  "",                     // Empty = no online payment: the buyer sends the order first and
+    personal:"",                     // gets the payment details back by email or WhatsApp.
+    team:    "",
+    company: "",
+    student: ""
   }
 };
 /* -------------------------------------------------------- */
 
 const TOOLS = [
   {panel:"Project Setup", id:"files", name:"Model Files", hrs:.25,
-   text:"Lists every file appended to the model with its path and date, oldest first. Red means a newer copy is on disk than the one inside your NWD; amber means the Revit file is newer than its NWC. Check it before running clash tests or sending an NWD.",
+   text:"Lists every file appended to the model with its path and date, oldest first. Red means a newer copy is on disk than the one inside your NWD; amber means the Revit file is newer than its NWC. Check it before running clash tests or sending an NWD, and take files you do not need out of the model.",
    replaces:"Re-running clashes after finding an out-of-date NWD"},
   {panel:"Project Setup", id:"levels", name:"Level Views", hrs:0,
    text:"Makes one plan viewpoint per level, cut at the height you choose, from the grid levels or from one appended file. Optional sectioned 3D per level. Run once at the start of a project.",
    replaces:"About 2 hours of level viewpoint setup per project"},
   {panel:"Select & Sets", id:"qty", name:"Select Similar", hrs:.75,
-   text:"Pick one element and select everything like it: same type, same family, same category or same name, in the whole model, one level or one file. Shows count, length, area and volume by level and type, exports to Excel and saves a search set.",
-   replaces:"Manual selection, counting and search-set setup"},
+   text:"Pick one element and select everything like it: same type, same family, same category or same name, in one file, on any level you choose, or the whole model. Exports the list to Excel and saves it as a live search set.",
+   replaces:"Manual selection and search-set setup"},
+  {panel:"Select & Sets", id:"qtys", name:"Quantities", hrs:.5,
+   text:"Count, length, area and volume of the selection, one saved set or every set, broken down by type and size (pipe and duct diameters), level, category or file, with a grand total. Copies straight into Excel.",
+   replaces:"Exporting properties to Excel and summing them by hand"},
   {panel:"Select & Sets", id:"appear", name:"Reload Appearance", hrs:.25,
    text:"Colours and transparency per saved set, one per service, put back on the model in one click after a model update. Imports your Appearance Profiler profiles, and can hide sets too.",
    replaces:"Applying every Appearance Profiler profile again after each model update"},
@@ -512,12 +515,15 @@ const TOOLS = [
   {panel:"Clash", id:"build", name:"Build Clash VPs", hrs:1.5,
    text:"Turns clash results into saved viewpoints filed by level and date, named VP00 - 001 onwards. Each has a section box, the clash items in red and green, everything else transparent, and a redline with the Element IDs.",
    replaces:"Saving, naming and marking up viewpoints one by one"},
-  {panel:"Clash", id:"dup", name:"Duplicate VPs", hrs:.25,
-   text:"Finds saved viewpoints that show the same clash or the same spot, suggests which one to keep and deletes the rest after you confirm.",
+  {panel:"Viewpoint", id:"dup", name:"Duplicate VPs", hrs:.25,
+   text:"Finds saved viewpoints that show the same clash or the same spot. Compare them side by side with pictures, mark what to keep, delete or keep as a different view, and delete in one go. Views on different levels are flagged for checking, not deleted.",
    replaces:"Cleaning up repeated viewpoints before the report"},
-  {panel:"Clash", id:"mark", name:"Reapply Markup VPs", hrs:.25,
+  {panel:"Viewpoint", id:"mark", name:"Reapply Markup VPs", hrs:.25,
    text:"Puts the section box, colours and redline back on viewpoints that already exist, including visual-check views you link to elements yourself.",
    replaces:"Redoing markup by hand after a model update"},
+  {panel:"Viewpoint", id:"renum", name:"Renumber VPs", hrs:.25,
+   text:"Puts viewpoint numbers back in sequence after you delete some (VP02-0001, 0004, 0009 become 0001, 0002, 0003) across a level's date folders, or renames a whole folder with your own prefix. Preview first.",
+   replaces:"Renaming viewpoints one by one after a clean-up"},
   {panel:"Element ID", id:"info", name:"Element Info", hrs:.25,
    text:"Select one or two elements to see their Element ID, level and source file. Copy the IDs for your report or save a viewpoint on them.",
    replaces:"Digging through the Properties window for IDs"},
@@ -557,6 +563,7 @@ function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;","
 })();
 
 /* links */
+if (Object.values(SHOP.pay).some(Boolean)) $("#pay-how").textContent = "Paid online on a secure payment page; your licence file follows within one working day.";
 document.querySelectorAll("[data-trial]").forEach(a => {
   if (SHOP.trialUrl) a.href = SHOP.trialUrl;
   else a.addEventListener("click", e => { e.preventDefault(); location.href = "mailto:" + SHOP.email + "?subject=" + encodeURIComponent("IZA Coordination Tools trial"); });
@@ -629,7 +636,9 @@ function buildIds(max, values, start){
 document.querySelectorAll("[data-buy]").forEach(b => b.addEventListener("click", () => {
   current = b.dataset.buy; const p = PLANS[current];
   $("#order-title").textContent = "Buy " + p.title;
-  $("#order-sum").textContent = p.price + ". ToyyibPay opens in a new tab for payment; this page then sends your order with one click.";
+  $("#order-sum").textContent = p.price + (SHOP.pay[p.key]
+    ? ". The payment page opens in a new tab; this page then sends your order with one click."
+    : ". Send your order with one click; the payment details come back by email or WhatsApp.");
   $("#f-ids").hidden = p.ids === 0;
   $("#f-company").querySelector(".hint").textContent = current === "company" ? "(required: the licence covers this company)" : "(for the invoice, optional)";
   const student = current === "student";
@@ -667,7 +676,7 @@ $("#o-go").addEventListener("click", e => {
   store("iza-order", order);
   const link = SHOP.pay[p.key];
   if (link) {
-    // ToyyibPay has no return link for dashboard bills: pay in a new tab, send the order from this one.
+    // Pay in a new tab, send the order from this one (works with gateways that have no return link).
     order.pay = link; store("iza-order", order);
     window.open(link, "_blank", "noopener");
     location.href = "thanks.html?status_id=pay&v=" + Date.now();
